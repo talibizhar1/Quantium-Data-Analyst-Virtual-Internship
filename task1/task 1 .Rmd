@@ -1,0 +1,320 @@
+---
+title: "Forage Task- 1"
+author: "Talib"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# installing package
+```{r}
+#install.packages("tidyverse")
+#install.packages("readxl")
+#install.packages("skimr")
+#install.packages("janitor")
+```
+# loading packages
+```{r}
+library(tidyverse)
+library(readr)
+library(skimr)
+library(janitor)
+library(data.table)
+```
+# importing transaction fie
+(checked in excel there is only 1 sheet in this workbook & converted to csv)
+And purchase behavior file(it has also 1 sheet)
+```{r}
+cust_beh1 <- fread("C:\\Users\\dexter\\Documents\\tlb docs\\Data_Analytics\\Forage\\QVI_purchase_behaviour.csv")
+
+#fread to get glimpse of first 5 & last5 rows
+trns_1 <- fread("C:\\Users\\dexter\\Documents\\tlb docs\\Data_Analytics\\Forage\\QVI_transaction_data.csv")
+
+head(trns_1)
+head(cust_beh1)
+```
+# data type 
+of transaction table 
+``` {r}
+str(trns_1)
+trns_1 %>% 
+    summarize_all(class) %>% 
+    gather(variable, class)
+```
+
+data type of customer behavior table
+```{r}
+str(cust_beh1)
+cust_beh1 %>% 
+    summarize_all(class) %>% 
+    gather(variable, class)
+```
+
+# Formatting data type
+of DATE column and assigning to new var
+```{r}
+trns_1Date <- trns_1
+trns_1$DATE <- as.Date(trns_1$DATE,origin="1899-12-30")
+```
+
+# summary of tables
+looking at summary of tables
+```{r}
+skim_without_charts(trns_1)
+skim_without_charts(cust_beh1)
+```
+This transaction data-set has 264,836 rows and 8 cols(1 character,7 Numeric) and Customer behavior has(72,637 rows & 3cols 2character,1 Numeric)
+**Mismatch of number of rows in tables**
+
+**Common column-CARD_NBR**
+
+For 2 quantitative columns of transaction table will be logical to get statistical description
+Mean is 2 but 4th quartile is 200 
+same for sales column mean is 7.4 but 4th quartile is 650 which is a huge difference from mean
+
+In DATE column the date difference is 364 days. 01,July 2018 to 30,June 2019
+
+In customer table there are 7 unique values in LIFESTAGE and 3 in PREMIUM CUSTOMER column.
+
+And there are no missing values in trns  & customer behavior table
+
+# Finding outliers
+Plotting box-whisker for  Product quantity and sales
+```{r}
+trns_1 %>% select(PROD_QTY,TOT_SALES) %>% boxplot()
+```
+Identifying outliers
+```{r}
+trns_1%>% filter(TOT_SALES>50 & PROD_QTY>50)
+
+```
+Removing these extreme outliers
+```{r}
+trns_out <- trns_1 %>% filter(PROD_QTY<50) 
+
+nrow(trns_1)
+noquote("Rows after outliers removed")
+nrow(trns_out)
+
+```
+removed 2 rows that were extreme outliers 
+
+```{r}
+summary(trns_out$PROD_QTY)
+summary(trns_out$TOT_SALES)
+```
+checking this max 29.5 sales
+```{r}
+trns_out %>% filter(TOT_SALES==29.5) %>% select(PROD_QTY,TOT_SALES)
+```
+As Product quantity is 5 this can be taken into consideration for analysis.
+
+# Exploring  product name col
+```{r}
+trns_out[,.N,PROD_NAME] 
+```
+As I am asked to analyse "Chips"  products only, I will remove all the other products.
+Checking most common words - by  getting unique values > splitting each string into substring > unlisting all the substrings. 
+```{r}
+products <- data.table(unlist(strsplit(unique(trns_out[,PROD_NAME]), " ")))
+setnames(products,"common_words")
+```
+
+Removing numbers, special characters the PROD_NAME col having  g/G from Prod name also removing "/".
+(grepl to remove the substring/characters)
+```{r}
+#Removing Numbers
+products <- products[grepl("\\d",common_words) == FALSE, ]
+#Removing special characters
+products <- products[grepl("[:alpha:]", common_words), ]
+#Most common_words by counting the number of times a word appears then sort by descending order
+products[, .N, common_words][order(N, decreasing = TRUE)]
+
+```
+# checking Date Col
+As we saw earlier 1 date is missing
+```{r}
+#unique dates
+length(unique(trns_out$DATE))
+#See all dates with instances.
+trns_out[,.N,DATE]
+```
+364 DATES, one date is missing,
+checking which date is missing
+```{r}
+#new var for date range
+date_range <- seq(min(trns_out$DATE), max(trns_out$DATE), by = 1) 
+date_range[!date_range %in% trns_out$DATE] 
+```
+It's 25th Dec, due to christmas stores must be closed and hence no data.
+
+Now I wil check if there are any duplicates in data.
+
+# checking duplicates
+From Janitor package
+```{r}
+get_dupes(trns_out )
+get_dupes(cust_beh1)
+```
+1 duplicate found having same values for all columns, no duplicates in customer behavior
+
+# Trnasforming table
+assigning to new var & changing the col names
+```{r}
+trns_out <- trns_out %>%  rename(CARD_NBR = LYLTY_CARD_NBR) 
+unique_trns <- unique(trns_out)
+
+cust_beh1 <- cust_beh1 %>% rename(CARD_NBR = LYLTY_CARD_NBR )
+```
+Now total 3 rows removed.,
+creating new col PACK SIZE in trnasaction table (gsub to extract the subsrtings)
+```{r}
+trnsc_cols <- unique_trns 
+trnsc_cols[, PACK_SIZE_g :=as.numeric(gsub("\\D","",unique_trns$PROD_NAME))] 
+trnsc_cols 
+```
+Checking distribution pack size column with histogram
+```{r}
+hist(trnsc_cols[,PACK_SIZE_g])
+```
+The size distribution seems fine also it make sense.
+
+Now I will create brand name column(with help of sample solution)
+```{r}
+#Finding the brand names
+trnsc_cols[,.N,substr(PROD_NAME, 1, regexpr(' ',PROD_NAME) - 1)][order(N,decreasing=TRUE)]
+trnsc_cols[, BRAND := toupper(substr(PROD_NAME, 1, regexpr(pattern = ' ',PROD_NAME) - 1))]
+#checking names
+trnsc_cols[,.N,BRAND][order(-N)]
+```
+29 brands total. I took help of sample solution as there were some names repeated,  such as RED and
+RRD, which are both Red Rock Deli chips.
+
+```{r}
+#Cleaning brand name
+trnsc_cols[BRAND == "RED",BRAND:="RRD"]
+trnsc_cols[BRAND=="WW",BRAND:="WOOLWORTHS"]
+trnsc_cols[BRAND=="INFZNS",BRAND:="INFUZIONS"]
+
+
+```
+After cleaning 26 brands are in the dataset.
+
+As we already seen how many unique values are in customer table we will see what are those values.
+checking unique values in customer behavior
+```{r}
+unique(cust_beh1$LIFESTAGE)
+print("**PREMIUM_CUSTOMER**")
+unique(cust_beh1$PREMIUM_CUSTOMER)
+```
+As there are no issue in this table I will merge both of the tables.
+
+#merging the tables 
+with common records only
+```{r}
+Merged_Data <-  merge(x=trnsc_cols,y=cust_beh1,by="CARD_NBR")
+```
+checking rows and cols
+```{r}
+skim_without_charts(Merged_Data)
+```
+Now the final table has 264833 rows and 12 columns without nulls.
+
+#saving the file in csv format
+```{r}
+write.csv(Merged_Data,"C:\\Users\\dexter\\Documents\\tlb docs\\Data_Analytics\\Forage\\Merged_Data.csv",row.names = FALSE)
+```
+## Data analysis.
+
+Setting metrics-
+1.Customer segment who are spending most,
+2.Chips bought per customer by segment,
+3.Number of customers in each segment,
+4.Avg sales by customer segment. 
+
+```{r}
+#Numbers of customer in each segment
+
+Merged_Data %>% group_by(LIFESTAGE) %>%  summarise(TOT_SALES = sum(TOT_SALES)) 
+Merged_Data %>% group_by(PREMIUM_CUSTOMER) %>%  summarise(TOT_SALES = sum(TOT_SALES)) 
+```
+Mainstream	customers are spending most in premium_customer and OLDER SINGLES/COUPLES in LIFESTAFE column.
+visualizing and comparing between these two categorical variables.
+```{r}
+#creating a variable sum of customers segmented by PREMIUM_CUSTOMER and LIFE_STAGE
+sumPC <- Merged_Data  %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>%  summarise(sales=sum(TOT_SALES)) 
+ggplot(data=sumPC) + 
+  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=sales,fill=LIFESTAGE),position='dodge')
+
+```
+Most sales coming from Budget-Midage single/couples,then Mainstream-young single/couples.
+Sales are high but is it because there are more customers or few customers buying more chips? Let's find out.
+
+```{r}
+custPC <- Merged_Data  %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>%  summarise(CustNum=length(unique(CARD_NBR))) 
+ggplot(data=custPC) + 
+  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=CustNum,fill=LIFESTAGE),position='dodge')
+```
+Highest number of customers are in Mainstream-Young Single/Couples segment that is the reason for more sales in this segment. But this is not the case for Budget-midage sement.
+Now, lets find if more chips are being bought per customer in the above segments or the otherwise.
+```{r}
+chipsPerCust <- Merged_Data %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>% summarise(PerTransaction=sum(PROD_QTY)/length(unique(CARD_NBR)))
+
+ggplot(data=chipsPerCust) +
+  geom_col(mapping=aes(x=PerTransaction,y=LIFESTAGE,fill=PREMIUM_CUSTOMER), position='dodge') +
+  labs(title='Chips bought per customer') 
+  
+```
+Mainstream-Older families segment are buying more chips, and then Mainstream-Young families.
+Now, we will find the segment spending most per pack by calculating average price per unit chips bought.
+```{r}
+PricePerUnit <- Merged_Data %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>% summarise(PerTransaction=sum(TOT_SALES)/sum(PROD_QTY))
+
+ggplot(data=PricePerUnit) +
+  geom_col(mapping=aes(x=PerTransaction,y=LIFESTAGE,fill=PREMIUM_CUSTOMER), position='dodge') +
+  labs(title='Chips bought per customer') 
+```
+Mainstream-Young single couple & Mid-age single/couples are tend to spend more per unit.
+Now, since mainstream young single couple segment are contributing in sales significantly we will see the brand they prefer and size of packet.
+
+```{r}
+target <- Merged_Data %>% filter(LIFESTAGE=='YOUNG SINGLES/COUPLES' & PREMIUM_CUSTOMER=='Mainstream')  
+other <- Merged_Data %>% filter(LIFESTAGE!='YOUNG SINGLES/COUPLES'& PREMIUM_CUSTOMER!='Mainstream') 
+##Quantity
+qty_target <- target %>% summarize(sum(PROD_QTY)) %>% as.numeric()
+qty_other <- other %>% summarize(sum(PROD_QTY)) %>%  as.numeric()
+
+##quantity by brand
+qty_target_brand <- target  %>% summarise(TargetSegment=sum(PROD_QTY)/qty_target,.by = BRAND)
+qty_other_brand <- other %>% summarise(OtherSegment=sum(PROD_QTY)/qty_other,.by = BRAND)
+
+brand_proportions <- merge(qty_target_brand,qty_other_brand) %>% mutate(affinity=TargetSegment/OtherSegment)
+setDT(brand_proportions)
+#brand_proportions=data.table(brand_proportions)
+brand_proportions[order(-affinity)]
+```
+ mainstream young single couple segment are tend to buy TYRRELLS chips most and BURGER the least.
+ Now we will check the pack size they prefer.
+```{r}
+##quantity by brand
+qty_target_pack <- target  %>% summarise(TargetSegment=sum(PROD_QTY)/qty_target,.by = PACK_SIZE_g)
+qty_other_pack <- other %>% summarise(OtherSegment=sum(PROD_QTY)/qty_other,.by = PACK_SIZE_g)
+
+pack_proportions <- merge(qty_target_pack,qty_other_pack) %>% mutate(affinity=TargetSegment/OtherSegment)
+setDT(brand_proportions)
+#brand_proportions=data.table(brand_proportions)
+brand_proportions[order(-affinity)]
+```
+Mainstream young single couple segment are tend to buy 270g pack size most and 220 the least. Let's check the brand who sells 270g size chips.
+```{r}
+Merged_Data[PACK_SIZE_g==270,unique(PROD_NAME)] 
+```
+The brand which sells 270g pack size is Twisties Cheese. 
+### Conclusion
+Most sales is coming from Budget-Mid-age single/couples,then Mainstream-young single/couples. Highest number of customers are in Mainstream-Young Single/Couples segment.
+
+Mainstream-Young single couple & Mid-age single/couples are tend to spend more per unit.
+
+mainstream young single couple segment are buying most chips compared to other segment, this segment prefers to buy TYRRELLS BRAND chips and 
+270 g pack size which is sold by only one brand Twisties.
+Recommendation- Category Manager can focus more on TYRRELLS chips as Mainstream-young single/couples are tend to buy this chips by increasing the visibility of the product to attract customers of this segment.
