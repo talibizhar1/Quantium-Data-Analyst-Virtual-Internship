@@ -1,6 +1,6 @@
 # Quantium-Data-Analyst-Virtual-Internship
 
-Welcome to my repository showcasing the work I've accomplished during the Forage's Quantium Virtual Internship! This repository provides a detailed overview of each task and project completed, along with links to relevant folders and documentation.
+Welcome to my repository showcasing the work I've accomplished during the Forage's Quantium Virtual Internship! This repository provides a detailed overview of 3 tasks provided to complete this program.
 
 ## Table of Contents
 
@@ -10,9 +10,12 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 4. [Final Project: Real-World Problem Solving](#final-project-real-world-problem-solving)
 5. [Feedback and Reflection](#feedback-and-reflection)
 
-## Task 1: Exploratory Data Analysis
+## Task 1: Data Exploration and Customer Analysis
 
-In Task 1, I embarked on a journey into the realm of exploratory data analysis. The goal was to gain insights from datasets provided by Quantium. The [Data Analysis Task Folder](/task1-exploratory-data-analysis) contains the code, visualizations, and a detailed analysis of the datasets. This task honed my skills in data cleaning, manipulation, and visualization.
+In Task 1, I embarked on a journey into the realm of exploratory data analysis. The goal was to clean, explore and gain insights of customers purchase behaviour provided by Quantium. The folder contains the code, visualizations, and a detailed analysis of the datasets. 
+
+Insights:
+
 
 ## Task 2: Strategic Market Analysis
 
