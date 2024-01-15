@@ -17,7 +17,7 @@ In Task 1, I embarked on a journey into the realm of exploratory data analysis. 
 Insights:
 
 
-## Task 2: Strategic Market Analysis
+## Task 2: Experimentation and uplift testing
 
 Task 2 focused on developing a strategic mindset by conducting a comprehensive analysis of market trends and opportunities.
 Insights:
