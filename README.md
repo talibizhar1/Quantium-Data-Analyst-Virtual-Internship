@@ -19,10 +19,12 @@ Insights:
 
 ## Task 2: Experimentation and uplift testing
 
-Task 2 focused on developing a strategic mindset by conducting a comprehensive analysis of market trends and opportunities.
+** Using cleaned data from task 1 created measures to identify the controlled stores.
+
+**
 Insights:
 
-## Task 3: Share
+## Task 3: Analytics and commercial application
 
 In this task I created a power point presentation sharing the key insights extracted from Task 1 and Task 2 to the client using Pyramid Principle.
 
