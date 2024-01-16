@@ -29,7 +29,10 @@ Insights:
 
 ## Task 2: Experimentation and uplift testing
 
-** Using cleaned data from task 1 created measures to identify the controlled stores.
+** Using cleaned data from task 1 created measures to identify the controlled stores against each trial stores.
+
+Useed R for data analysis and visualization and summarise findings and provide recommendations.
+
 
 **
 Insights:
