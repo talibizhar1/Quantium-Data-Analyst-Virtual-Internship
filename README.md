@@ -15,7 +15,14 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 
 ## Task 1: Data Exploration and Customer Analysis
 
-In Task 1, I embarked on a journey into the realm of exploratory data analysis. The goal was to clean, explore and gain insights of customers purchase behaviour provided by Quantium. The folder contains the code, visualizations, and a detailed analysis of the datasets. 
+In Task 1, I embarked on a journey into the realm of exploratory data analysis.
+
+Analyzed transaction and customer data to identify trends and inconsistencies. 
+
+Developed metrics and examine sales drivers to gain insights into overall sales performance. 
+
+Created visualizations and prepare findings to formulate a clear recommendation for the client's strategy.
+
 
 Insights:
 
