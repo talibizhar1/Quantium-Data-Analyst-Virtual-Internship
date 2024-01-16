@@ -41,6 +41,8 @@ Insights:
 
 In this task I created a power point presentation sharing the key insights extracted from Task 1 and Task 2 to the client using Pyramid Principle.
 
+And submited a report that incorporates data visualizations, key insights, and recommendations.
+
 ## Feedback and Reflection
 
 I greatly value the feedback received throughout the internship.
