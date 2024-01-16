@@ -5,7 +5,7 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 ## Table of Contents
 
 1. Project Overview
-2. [Task 1: Data Exploration and Customer Analysis](#task-1-exploratory-data-analysis)
+2. [Task 1: Data Exploration and Customer Analysis](#task-1)
 3. [Task 2: Experimentation and uplift testing](#task-2-strategic-market-analysis)
 4. [Task 3:Analytics and commercial application
  ](#task-3-advanced-analytics-applications)
