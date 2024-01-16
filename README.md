@@ -4,11 +4,11 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 
 ## Table of Contents
 
-1. [Task 1: Exploratory Data Analysis](#task-1-exploratory-data-analysis)
-2. [Task 2: Strategic Market Analysis](#task-2-strategic-market-analysis)
-3. [Task 3: Advanced Analytics Applications](#task-3-advanced-analytics-applications)
-4. [Final Project: Real-World Problem Solving](#final-project-real-world-problem-solving)
-5. [Feedback and Reflection](#feedback-and-reflection)
+1. [Task 1: Data Exploration and Customer Analysis](#task-1-exploratory-data-analysis)
+2. [Task 2: Experimentation and uplift testing](#task-2-strategic-market-analysis)
+3. [Task 3:Analytics and commercial application
+ ](#task-3-advanced-analytics-applications)
+4. [Feedback and Reflection](#feedback-and-reflection)
 
 ## Task 1: Data Exploration and Customer Analysis
 
