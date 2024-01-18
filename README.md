@@ -15,16 +15,18 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 
 ## Task 1: Data Exploration and Customer Analysis
 
-In Task 1, I embarked on a journey into the realm of exploratory data analysis.
+In Task 1, I explored and cleaned the dataset.
+Formatting dataset:changed data type of Date column to the Date data type.
 
-Analyzed transaction and customer data to identify trends and inconsistencies. 
+Removing outliers: With help of box whisker plot.
 
 Developed metrics and examine sales drivers to gain insights into overall sales performance. 
 
-Created visualizations and prepare findings to formulate a clear recommendation for the client's strategy.
+Created visualizations and prepare findings to formulate a clear recommendation for the client's strategy
 
+Insights:Most sales is coming from Budget-Mid-age single/couples,then Mainstream-young single/couples. Highest number of customers are in Mainstream-Young Single/Couples segment.
 
-Insights:
+Category Manager can focus more on TYRRELLS chips as Mainstream-young single/couples are tend to buy this chips by increasing the visibility of the product to attract customers of this segment.
 
 
 ## Task 2: Experimentation and uplift testing
