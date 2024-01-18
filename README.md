@@ -6,7 +6,7 @@ Welcome to my repository showcasing the work I've accomplished during the Forage
 
 1. Project Overview
 2. [Task 1: Data Exploration and Customer Analytics](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/task1)
-3. [Task 2: Experimentation and uplift testing](#task-2-strategic-market-analysis)
+3. [Task 2: Experimentation and uplift testing](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/Task%202)
 4. [Task 3:Analytics and commercial application
  ](#task-3-advanced-analytics-applications)
 5. [Feedback and Reflection]
