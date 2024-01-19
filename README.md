@@ -45,7 +45,7 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
   - library(data.table)
 - PowerPoint (for creating final report).
 
-##2. Task 1: Data Exploration and Customer Analysis
+## 3. Task 1: Data Exploration and Customer Analysis
 
 - Explored and cleaned the dataset, formatting the Date column to the Date data type.
 - Identified outliers using a box whisker plot.
@@ -57,7 +57,7 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
 - Highest customer concentration in the Mainstream-Young Single/Couples segment.
 - Recommendation: Focus on TYRRELLS chips with increased visibility for Mainstream-young single/couples.
 
-##3. Task 2: Experimentation and Uplift Testing
+## 4. Task 2: Experimentation and Uplift Testing
 
 - Created measures to identify controlled stores against each trial store based on sales revenue and number of customers.
 - Ranked potential controlled stores using Pearson Correlation and Magnitude distance.
@@ -67,12 +67,12 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
 - Control stores for trials 77, 86, and 88 are 233, 155, and 237 respectively.
 - Stores 77 and 88 show significant differences in at least two of the three months.
 
-## 4.Task 3: Analytics and Commercial Application
+## 5. Task 3: Analytics and Commercial Application
 
 - Created a PowerPoint presentation using the Pyramid Principle to share key insights with the client.
 - Submitted a report incorporating data visualizations, insights, and recommendations.
 
-##5. Feedback and Reflection
+## 6. Feedback and Reflection
 
 I greatly value the feedback received throughout the internship.
 
