@@ -1,6 +1,6 @@
 # Quantium-Data-Analyst-Virtual-Internship
 
-[https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Quantium/NkaC7knWtjSbi6aYv_Quantium_JHeC6a7tzzPokKo5h_1705677723121_completion_certificate.pdf]
+[alt text](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Quantium/NkaC7knWtjSbi6aYv_Quantium_JHeC6a7tzzPokKo5h_1705677723121_completion_certificate.pdf)
 
 Welcome to my repository showcasing the work I've accomplished during the Forage's Quantium Virtual Internship! This repository provides a detailed overview of 3 tasks provided to complete this program.
 
