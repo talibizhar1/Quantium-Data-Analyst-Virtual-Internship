@@ -5,17 +5,19 @@
 ![certificate](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/assets/129067554/023d18b3-b565-4a6e-ba77-2eeaa30cc1c6)
 
 Welcome to my repository showcasing the work I've accomplished during the Forage's Quantium Virtual Internship! This repository provides a detailed overview of 3 tasks provided to complete this program.
-
+## Quantium
+Founded in 2002, Quantium has a long history of innovation in data science across all sectors of the economy. As a rapidly growing global leader in data science and AI, we are dedicated to growing our team of ambitious, diverse, and fun employees! Our team of employees work together to harness the power of data to drive revolutionary change that benefits us all and deliver the best results for our clients.
 ## Table of Contents
 
 1. Project Overview
-2. [Task 1: Data Exploration and Customer Analytics](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/task1)
-3. [Task 2: Experimentation and uplift testing](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/Task%202)
-4. [Task 3:Analytics and commercial application
+2. Tools
+3. [Task 1: Data Exploration and Customer Analytics](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/task1)
+4. [Task 2: Experimentation and uplift testing](https://github.com/talibizhar1/Quantium-Data-Analyst-Virtual-Internship/tree/main/Task%202)
+5. [Task 3:Analytics and commercial application
  ](#task-3-advanced-analytics-applications)
-5. [Feedback and Reflection]
+6. [Feedback and Reflection]
 
-## Project Overview
+## 1. Project Overview
 This project involves comprises of 3 tasks. And a comprehensive analysis of customer data and experimentation to provide actionable insights and recommendations for optimizing sales strategies.
 
 ## Task 1: Data Exploration and Customer Analysis
@@ -30,7 +32,7 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
 
 - Create a report for the Client, highlighting key insights from Task 1 and Task 2 using the Pyramid Principle.
 
-## Tools
+## 2. Tools
 - Excel, Rstudio (for Analysis).
 - - Libraries used (in R)
   - library(ggplot2)
@@ -43,7 +45,7 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
   - library(data.table)
 - PowerPoint (for creating final report).
 
-## Task 1: Data Exploration and Customer Analysis
+##2. Task 1: Data Exploration and Customer Analysis
 
 - Explored and cleaned the dataset, formatting the Date column to the Date data type.
 - Identified outliers using a box whisker plot.
@@ -55,7 +57,7 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
 - Highest customer concentration in the Mainstream-Young Single/Couples segment.
 - Recommendation: Focus on TYRRELLS chips with increased visibility for Mainstream-young single/couples.
 
-## Task 2: Experimentation and Uplift Testing
+##3. Task 2: Experimentation and Uplift Testing
 
 - Created measures to identify controlled stores against each trial store based on sales revenue and number of customers.
 - Ranked potential controlled stores using Pearson Correlation and Magnitude distance.
@@ -65,12 +67,12 @@ This project involves comprises of 3 tasks. And a comprehensive analysis of cust
 - Control stores for trials 77, 86, and 88 are 233, 155, and 237 respectively.
 - Stores 77 and 88 show significant differences in at least two of the three months.
 
-## Task 3: Analytics and Commercial Application
+## 4.Task 3: Analytics and Commercial Application
 
 - Created a PowerPoint presentation using the Pyramid Principle to share key insights with the client.
 - Submitted a report incorporating data visualizations, insights, and recommendations.
 
-## Feedback and Reflection
+##5. Feedback and Reflection
 
 I greatly value the feedback received throughout the internship.
 
