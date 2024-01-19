@@ -1,5 +1,5 @@
 ---
-title: "Forage Task- 1"
+title: "Quantium Virtual Internship Task- 1"
 author: "Talib"
 output:
   pdf_document: default
@@ -21,7 +21,7 @@ library(skimr)
 library(janitor)
 library(data.table)
 ```
-# importing transaction fie
+# importing transaction file
 (checked in excel there is only 1 sheet in this workbook & converted to csv)
 And purchase behavior file(it has also 1 sheet)
 ```{r}
@@ -34,7 +34,7 @@ head(trns_1)
 head(cust_beh1)
 ```
 # data type 
-of transaction table 
+Transaction table 
 ``` {r}
 str(trns_1)
 trns_1 %>% 
@@ -51,7 +51,7 @@ cust_beh1 %>%
 ```
 
 # Formatting data type
-of DATE column and assigning to new var
+Of DATE column and assigning to new variable
 ```{r}
 trns_1Date <- trns_1
 trns_1$DATE <- as.Date(trns_1$DATE,origin="1899-12-30")
@@ -131,7 +131,7 @@ products <- products[grepl("[:alpha:]", common_words), ]
 products[, .N, common_words][order(N, decreasing = TRUE)]
 
 ```
-# checking Date Col
+# Checking Date Col
 As we saw earlier 1 date is missing
 ```{r}
 #unique dates
@@ -142,13 +142,37 @@ trns_out[,.N,DATE]
 364 DATES, one date is missing,
 checking which date is missing
 ```{r}
-#new var for date range
+#new variable for date range
 date_range <- seq(min(trns_out$DATE), max(trns_out$DATE), by = 1) 
 date_range[!date_range %in% trns_out$DATE] 
 ```
-It's 25th Dec, due to christmas stores must be closed and hence no data.
+It's 25th Dec, due to Christmas stores must be closed and therefore no data.
 
-Now I wil check if there are any duplicates in data.
+Let's see this visually.
+```{r}
+transactionByDate <- trns_out[, .N, by = DATE]
+
+transactDate <- tribble(
+  ~ DATE, ~ event,
+  "2018-12-25", "          Dip in transactions  \n                                       as stores closed on Christmas  ",
+  "2018-12-15", "\n \n \n \n \n Transactions                     \nstarts to increase              \nat the begining of December           "
+) %>% mutate(DATE = as.Date(DATE))
+
+ggplot(transactionByDate, aes(x=DATE, y=N)) +
+  coord_cartesian( ylim = c(500, 1100))+
+  geom_line() +
+  scale_x_date(date_labels="%b %y",date_breaks  ="1 month")+
+  geom_vline(data = transactDate,aes(xintercept=DATE),linetype="longdash", 
+    color="coral",size=0.5) +
+    geom_text(data=transactDate,aes(DATE,label=event),y=1000, size=3)+
+    ylab("Number of Transactions") +
+  #to remove background and modify axis color
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "white"))
+```
+
+After finding out the number of transactions trend, I labeled the graph accordingly to use it in presentation.
+Now I will check if there are any duplicates in data.
 
 # checking duplicates
 From Janitor package
@@ -159,7 +183,7 @@ get_dupes(cust_beh1)
 1 duplicate found having same values for all columns, no duplicates in customer behavior
 
 # Trnasforming table
-assigning to new var & changing the col names
+assigning to new variable & changing the col names
 ```{r}
 trns_out <- trns_out %>%  rename(CARD_NBR = LYLTY_CARD_NBR) 
 unique_trns <- unique(trns_out)
@@ -244,8 +268,10 @@ visualizing and comparing between these two categorical variables.
 #creating a variable sum of customers segmented by PREMIUM_CUSTOMER and LIFE_STAGE
 sumPC <- Merged_Data  %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>%  summarise(sales=sum(TOT_SALES)) 
 ggplot(data=sumPC) + 
-  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=sales,fill=LIFESTAGE),position='dodge')
-
+  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=sales,fill=LIFESTAGE),position='dodge') +
+   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "white"))+
+  xlab("")
 ```
 Most sales coming from Budget-Midage single/couples,then Mainstream-young single/couples.
 Sales are high but is it because there are more customers or few customers buying more chips? Let's find out.
@@ -253,7 +279,10 @@ Sales are high but is it because there are more customers or few customers buyin
 ```{r}
 custPC <- Merged_Data  %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>%  summarise(CustNum=length(unique(CARD_NBR))) 
 ggplot(data=custPC) + 
-  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=CustNum,fill=LIFESTAGE),position='dodge')
+  geom_col(mapping=aes(x=PREMIUM_CUSTOMER,y=CustNum,fill=LIFESTAGE),position='dodge') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "white"))+
+  ylab("Number of Customers")
 ```
 Highest number of customers are in Mainstream-Young Single/Couples segment that is the reason for more sales in this segment. But this is not the case for Budget-midage sement.
 Now, lets find if more chips are being bought per customer in the above segments or the otherwise.
@@ -272,7 +301,7 @@ PricePerUnit <- Merged_Data %>% group_by(LIFESTAGE,PREMIUM_CUSTOMER) %>% summari
 
 ggplot(data=PricePerUnit) +
   geom_col(mapping=aes(x=PerTransaction,y=LIFESTAGE,fill=PREMIUM_CUSTOMER), position='dodge') +
-  labs(title='Chips bought per customer') 
+  labs(title='Spend per pack') 
 ```
 Mainstream-Young single couple & Mid-age single/couples are tend to spend more per unit.
 Now, since mainstream young single couple segment are contributing in sales significantly we will see the brand they prefer and size of packet.
@@ -310,7 +339,8 @@ Mainstream young single couple segment are tend to buy 270g pack size most and 2
 Merged_Data[PACK_SIZE_g==270,unique(PROD_NAME)] 
 ```
 The brand which sells 270g pack size is Twisties Cheese. 
-### Conclusion
+
+## Conclusion
 Most sales is coming from Budget-Mid-age single/couples,then Mainstream-young single/couples. Highest number of customers are in Mainstream-Young Single/Couples segment.
 
 Mainstream-Young single couple & Mid-age single/couples are tend to spend more per unit.
